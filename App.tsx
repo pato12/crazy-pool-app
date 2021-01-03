@@ -1,10 +1,11 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import { ThemeProvider } from 'react-native-elements';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
 
 import useTheme from './hooks/useTheme';
 
+import SplashScreenView from './views/splashscreen';
 import MainView from './views/main';
 import WalletStatsView from './views/walletStats';
 
@@ -24,6 +25,7 @@ function App() {
 function AppStack() {
   const { theme, replaceTheme } = useTheme();
   const { isDarkMode } = useDarkMode();
+  const isLookingSplashScreen = useFakeLoading(2 * 1000);
 
   useLayoutEffect(() => {
     if (isDarkMode) {
@@ -32,6 +34,10 @@ function AppStack() {
       replaceTheme(lightTheme);
     }
   }, [isDarkMode]);
+
+  if (isLookingSplashScreen) {
+    return <SplashScreenView />;
+  }
 
   return (
     <NavigationContainer>
@@ -54,3 +60,15 @@ function AppStack() {
 }
 
 export default App;
+
+function useFakeLoading(ms: number) {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useLayoutEffect(() => {
+    const interval = setInterval(() => setIsLoading(false), ms);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return isLoading;
+}
