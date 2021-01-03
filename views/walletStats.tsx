@@ -2,12 +2,11 @@ import React, { useCallback, useLayoutEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { ButtonGroup, Button, Text } from 'react-native-elements';
 import { formatDistanceToNow } from 'date-fns';
-import { ActivityIndicator } from 'react-native';
 
 import useWalletStats from '../hooks/useWalletStats';
 import useCurrencyRate from '../hooks/useCurrencyRate';
 
-import { Layout } from '../components/ui';
+import { Layout, ActivityIndicator } from '../components/ui';
 import WalletOverview from '../components/WalletOverview';
 import WalletWorkers from '../components/WalletWorkers';
 import WalletRewards from '../components/WalletRewards';
@@ -50,7 +49,7 @@ function WalletStats(props: IWalletStatsProps) {
     return (
       <Layout>
         <View style={styles.container}>
-          <ActivityIndicator />
+          <ActivityIndicator size="large" />
         </View>
       </Layout>
     );
@@ -109,7 +108,6 @@ const styles = StyleSheet.create({
   },
   footer: {
     margin: 15,
-    marginBottom: 30,
   },
   hint: {
     opacity: 0.5,
