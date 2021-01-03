@@ -121,3 +121,13 @@ export interface PoolStatsData {
     roundShares: number;
   };
 }
+
+export interface CriptoYaData {
+  oficial: number;
+  solidario: number;
+  mep: number;
+  ccl: number;
+  ccb: number;
+  blue: number;
+  time: number;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Text } from 'react-native-elements';
 
 function Title(props: React.PropsWithChildren<{}>) {
   return <Text style={styles.title}>{props.children}</Text>;

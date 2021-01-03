@@ -1,12 +1,13 @@
 import React from 'react';
-import { Card, ListItem } from 'react-native-elements';
-import { Text, View } from 'react-native';
+import { Card, ListItem, Text } from 'react-native-elements';
+import { View } from 'react-native';
 import { formatDistanceToNow } from 'date-fns';
 
 import type { IWalletStatsData } from '../hooks/useWalletStats';
 
 import { formatHashrate } from '../helpers';
 import { Container, Title } from './ui';
+import RealTimeDate from './RealTimeDate';
 
 interface IWalletWorkersProps {
   workers: IWalletStatsData['workers'];
@@ -77,9 +78,15 @@ function WorkerItem(props: IWorkerItemProps) {
           <ListItem.Content>
             <ListItem.Title>Last Share:</ListItem.Title>
           </ListItem.Content>
-          <Text>{formatDistanceToNow(props.lastBeat * 1000, { includeSeconds: true })}</Text>
+          <Text>
+            <RealTimeDate value={props.lastBeat * 1000} formater={formatDate} interval={5 * 1000} />
+          </Text>
         </ListItem>
       </Card>
     </View>
   );
+}
+
+function formatDate(value: number) {
+  return formatDistanceToNow(value, { includeSeconds: true });
 }

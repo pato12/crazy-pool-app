@@ -4,7 +4,7 @@ import { ThemeContext } from 'react-native-elements';
 function useTheme() {
   const context = useContext(ThemeContext);
 
-  return context.theme;
+  return context;
 }
 
 export default useTheme;

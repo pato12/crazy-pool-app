@@ -1,20 +1,23 @@
 import _ from 'lodash';
 import React from 'react';
-import { Card, Divider, ListItem } from 'react-native-elements';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, Card, ListItem } from 'react-native-elements';
+import { View, StyleSheet } from 'react-native';
 import { format } from 'date-fns';
 
 import type { IWalletStatsData } from '../hooks/useWalletStats';
+import type { IRate } from '../hooks/useCurrencyRate';
+import useTheme from '../hooks/useTheme';
 
 import { formatBalance, formatBlockHeight, formatPercent, formatWalletAddress } from '../helpers';
 import { Title, Container } from './ui';
 
 interface IWalletRewardsProps {
   data: IWalletStatsData;
+  rate: IRate;
 }
 
-function WalletRewards(props: IWalletRewardsProps) {
-  const { sumrewards, rewards } = props.data;
+function WalletRewards({ data, rate }: IWalletRewardsProps) {
+  const { sumrewards, rewards } = data;
 
   return (
     <React.Fragment>
@@ -24,16 +27,18 @@ function WalletRewards(props: IWalletRewardsProps) {
 
       <Card containerStyle={{ padding: 0 }}>
         {sumrewards.map(reward => (
-          <ListItem bottomDivider>
+          <ListItem bottomDivider key={reward.name}>
             <ListItem.Content>
               <ListItem.Title>{reward.name}</ListItem.Title>
             </ListItem.Content>
-            <Text>{formatBalance(reward.reward)} ETH</Text>
+            <Text>
+              {formatBalance(reward.reward * rate.multipler, rate.decimals)} {rate.iso}
+            </Text>
           </ListItem>
         ))}
       </Card>
 
-      <BlockReward rewards={rewards} />
+      <BlockReward rewards={rewards} rate={rate} />
     </React.Fragment>
   );
 }
@@ -42,10 +47,19 @@ export default WalletRewards;
 
 interface IBlockRewardProps {
   rewards: IWalletStatsData['rewards'];
+  rate: IRate;
 }
 
-function BlockReward(props: IBlockRewardProps) {
-  if (props.rewards.length === 0) return null;
+function BlockReward({ rate, rewards }: IBlockRewardProps) {
+  const { theme } = useTheme();
+
+  if (rewards.length === 0) return null;
+
+  const rowItem = {
+    padding: 15,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    borderBottomColor: theme.colors?.divider,
+  };
 
   return (
     <View>
@@ -54,19 +68,21 @@ function BlockReward(props: IBlockRewardProps) {
       </Container>
 
       <Card containerStyle={{ padding: 0 }}>
-        <View style={styles.rowItem}>
+        <View style={rowItem}>
           <View style={styles.row}>
             <Text style={styles.columnHeader}>Block Height</Text>
-            <Text style={styles.columnHeader}>Reward</Text>
+            <Text style={{ ...styles.columnHeader, ...styles.extendedColumn }}>Reward</Text>
             <Text style={styles.columnHeader}>Round Share</Text>
           </View>
         </View>
 
-        {props.rewards.map(reward => (
-          <View style={styles.rowItem} key={reward.blockhash}>
+        {rewards.map(reward => (
+          <View style={rowItem} key={reward.blockhash}>
             <View style={styles.row}>
               <Text style={styles.column}>{formatBlockHeight(reward.blockheight)}</Text>
-              <Text style={styles.column}>{formatBalance(reward.reward)}</Text>
+              <Text style={styles.extendedColumn}>
+                {formatBalance(reward.reward * rate.multipler, rate.decimals)} {rate.iso}
+              </Text>
               <Text style={styles.column}>{formatPercent(reward.percent, 4)}</Text>
             </View>
             <Text style={styles.hint}>
@@ -81,11 +97,6 @@ function BlockReward(props: IBlockRewardProps) {
 }
 
 const styles = StyleSheet.create({
-  rowItem: {
-    padding: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#EEE',
-  },
   row: {
     display: 'flex',
     flexDirection: 'row',
@@ -96,6 +107,9 @@ const styles = StyleSheet.create({
   },
   column: {
     flex: 1,
+  },
+  extendedColumn: {
+    flex: 1.5,
   },
   hint: {
     opacity: 0.5,

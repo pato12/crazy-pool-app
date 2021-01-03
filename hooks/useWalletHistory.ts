@@ -38,11 +38,17 @@ function useWalletHistory() {
     forceUpdate();
   }, []);
 
+  const clearHistory = useCallback(async () => {
+    await localStorage.storeItem(WALLET_HISTORY_KEY, []);
+    forceUpdate();
+  }, []);
+
   return {
     history: value ?? [],
     isLoading: loading,
     isError: !!error,
     saveWalletAddress,
+    clearHistory,
   };
 }
 

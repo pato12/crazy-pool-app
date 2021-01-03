@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import useAsync from 'react-use/lib/useAsync';
+import useUpdateEffect from 'react-use/lib/useUpdateEffect';
 
 import { getAccount, getPoolStats } from '../services/open-ethereum-pool';
 import type { PoolStatsData, WalletAccountData } from '../services/types';
@@ -6,16 +8,21 @@ import type { PoolStatsData, WalletAccountData } from '../services/types';
 export type IWalletStatsData = ReturnType<typeof parseData>;
 
 function useWalletStats(walletAddress: string) {
+  const [lastUpdate, setLastUpdate] = useState(-1);
+
   const account = useAsync(() => getAccount(walletAddress), [walletAddress]);
   const pool = useAsync(() => getPoolStats(), []);
 
   const data: IWalletStatsData | undefined =
     account.value && pool.value ? parseData(account.value, pool.value) : undefined;
 
+  useUpdateEffect(() => setLastUpdate(Date.now()), [account.value, pool.value]);
+
   return {
     data,
     isLoading: account.loading || pool.loading,
     isError: !!account.error || !!pool.error,
+    lastUpdate,
   };
 }
 
@@ -50,6 +57,7 @@ function parseData(walletStats: WalletAccountData, poolStats: PoolStatsData) {
     workersOnline,
     workers,
     sumrewards: walletStats.sumrewards,
+    exchangedata: walletStats.exchangedata,
     rewards: walletStats.rewards.slice(0, 10),
   };
 }

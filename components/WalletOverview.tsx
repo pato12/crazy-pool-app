@@ -1,17 +1,18 @@
 import _ from 'lodash';
 import React from 'react';
-import { Card, ListItem } from 'react-native-elements';
-import { Text } from 'react-native';
+import { Card, ListItem, Text } from 'react-native-elements';
 
 import type { IWalletStatsData } from '../hooks/useWalletStats';
+import type { IRate } from '../hooks/useCurrencyRate';
 
 import { formatBalance, formatHashrate, formatPercent } from '../helpers';
 
 interface IWalletOverviewProps {
   data: IWalletStatsData;
+  rate: IRate;
 }
 
-function WalletOverview(props: IWalletOverviewProps) {
+function WalletOverview({ data, rate }: IWalletOverviewProps) {
   const {
     roundPercent,
     roundVariance,
@@ -21,7 +22,7 @@ function WalletOverview(props: IWalletOverviewProps) {
     pendingBalance,
     last24hreward,
     workersOnline,
-  } = props.data;
+  } = data;
 
   return (
     <Card containerStyle={{ padding: 0 }}>
@@ -30,7 +31,9 @@ function WalletOverview(props: IWalletOverviewProps) {
           <ListItem.Content>
             <ListItem.Title>Immature Balance:</ListItem.Title>
           </ListItem.Content>
-          <Text>{formatBalance(immatureBalance)} ETH</Text>
+          <Text>
+            {formatBalance(immatureBalance * rate.multipler, rate.decimals)} {rate.iso}
+          </Text>
         </ListItem>
       )}
       {!_.isNaN(pendingBalance) && (
@@ -38,7 +41,9 @@ function WalletOverview(props: IWalletOverviewProps) {
           <ListItem.Content>
             <ListItem.Title>Pending Balance:</ListItem.Title>
           </ListItem.Content>
-          <Text>{formatBalance(pendingBalance)} ETH</Text>
+          <Text>
+            {formatBalance(pendingBalance * rate.multipler, rate.decimals)} {rate.iso}
+          </Text>
         </ListItem>
       )}
       {!_.isNaN(last24hreward) && (
@@ -46,7 +51,9 @@ function WalletOverview(props: IWalletOverviewProps) {
           <ListItem.Content>
             <ListItem.Title>Last 24h Reward:</ListItem.Title>
           </ListItem.Content>
-          <Text>{formatBalance(last24hreward)} ETH</Text>
+          <Text>
+            {formatBalance(last24hreward * rate.multipler, rate.decimals)} {rate.iso}
+          </Text>
         </ListItem>
       )}
       {!_.isNaN(lastHourHashRate) && (

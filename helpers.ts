@@ -24,8 +24,8 @@ export function formatWalletAddress(walletAddress: string) {
   return `${walletAddress.substr(0, 5)}...${walletAddress.substr(-5)}`;
 }
 
-export function formatBalance(value: number) {
-  return (value * 0.000000001).toFixed(8);
+export function formatBalance(value: number, decimals = 8) {
+  return (value * 0.000000001).toFixed(decimals);
 }
 
 export function formatBlockHeight(height: number) {
