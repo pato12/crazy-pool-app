@@ -1,12 +1,14 @@
 import _ from 'lodash';
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import type { Theme as ITheme } from 'react-native-elements';
 import { StyleSheet } from 'react-native';
+
+import usePersistentState from './hooks/usePersistentState';
 
 const DarkModeContext = React.createContext({ isDarkMode: false, setIsDarkMode: _.noop });
 
 export function DarkModeProvider(props: React.PropsWithChildren<{}>) {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = usePersistentState('darkMode', false);
 
   return (
     <DarkModeContext.Provider value={{ isDarkMode, setIsDarkMode }}>

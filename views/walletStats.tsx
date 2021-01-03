@@ -5,6 +5,7 @@ import { formatDistanceToNow } from 'date-fns';
 
 import useWalletStats from '../hooks/useWalletStats';
 import useCurrencyRate from '../hooks/useCurrencyRate';
+import usePersistentState from '../hooks/usePersistentState';
 
 import { Layout, ActivityIndicator } from '../components/ui';
 import WalletOverview from '../components/WalletOverview';
@@ -19,7 +20,7 @@ interface IWalletStatsProps extends WalletStatsProps {}
 
 function WalletStats(props: IWalletStatsProps) {
   const [selectedMenu, setSelectedMenu] = useState(0);
-  const [selectedRate, setSelectedRate] = useState('eth');
+  const [selectedRate, setSelectedRate] = usePersistentState('selecedRate', 'eth');
 
   const walletAddresss = props.route.params.wallet;
 
