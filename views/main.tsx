@@ -1,11 +1,13 @@
-import React, { useCallback, useLayoutEffect, useState } from 'react';
-import { View, ScrollView } from 'react-native';
-import { Text, Card, Input, Button } from 'react-native-elements';
+import React, { useCallback, useLayoutEffect } from 'react';
+import { ScrollView } from 'react-native';
+import { Button } from 'react-native-elements';
+import useToggle from 'react-use/lib/useToggle';
 
 import useWalletHistory from '../hooks/useWalletHistory';
 
-import WalletHistory from '../components/WalletHistory';
 import { Container, Layout, Title } from '../components/ui';
+import WalletHistory from '../components/WalletHistory';
+import WalletSelector from '../components/WalletSelector';
 
 import { MainProps } from '../navigation';
 import { useDarkMode } from '../themeManager';
@@ -15,19 +17,13 @@ interface IMainViewProps extends MainProps {}
 function MainView(props: IMainViewProps) {
   const { history, saveWalletAddress, clearHistory } = useWalletHistory();
 
-  const [wallet, setWallet] = useState<string>('');
   const { isDarkMode, setIsDarkMode } = useDarkMode();
+  const [walletSelectorVisible, toggleWalleSelectorVisible] = useToggle(false);
 
   const onNavigateToWallet = useCallback((wallet: string) => {
     saveWalletAddress(wallet);
     props.navigation.navigate('WalletStats', { wallet });
   }, []);
-
-  const onShowStats = useCallback(() => {
-    if (wallet) {
-      onNavigateToWallet(wallet);
-    }
-  }, [wallet]);
 
   useLayoutEffect(() => {
     props.navigation.setOptions({
@@ -38,22 +34,16 @@ function MainView(props: IMainViewProps) {
   return (
     <Layout>
       <ScrollView>
-        <Container>
-          <Title>Look Up Wallet</Title>
-        </Container>
-        <Card>
-          <View>
-            <Text>Wallet Address</Text>
-            <Input placeholder="0x0000000000000000000" value={wallet} onChangeText={setWallet} />
-            <Button title="Show stats" onPress={onShowStats} />
-          </View>
-        </Card>
-
         <WalletHistory
           history={history}
           onNavigateToWallet={onNavigateToWallet}
           onClearHistory={clearHistory}
+          onAddWallet={toggleWalleSelectorVisible}
         />
+
+        <Container>
+          <Title>Settings</Title>
+        </Container>
 
         <Button
           type="clear"
@@ -61,6 +51,12 @@ function MainView(props: IMainViewProps) {
           onPress={() => setIsDarkMode((v: boolean) => !v)}
         />
       </ScrollView>
+
+      <WalletSelector
+        isVisible={walletSelectorVisible}
+        onClose={toggleWalleSelectorVisible}
+        onNavigateToWallet={onNavigateToWallet}
+      />
     </Layout>
   );
 }

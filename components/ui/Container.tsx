@@ -1,8 +1,12 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 
-function Container(props: React.PropsWithChildren<{}>) {
-  return <View style={styles.container}>{props.children}</View>;
+function Container(props: React.PropsWithChildren<React.ComponentProps<typeof View>>) {
+  return (
+    <View {...props} style={StyleSheet.flatten([styles.container, props.style])}>
+      {props.children}
+    </View>
+  );
 }
 
 export default Container;

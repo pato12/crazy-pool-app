@@ -3109,6 +3109,11 @@ expo-asset@~8.2.1:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
+expo-clipboard@~1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/expo-clipboard/-/expo-clipboard-1.0.1.tgz#cc73e01dce83cca0df2c539d2c862aa892e70bfc"
+  integrity sha512-TQjMi9mAZr8jQOSl/XJLVwW6DTmjA3qAOUMk4BuxlMvJ1NqJbCITLEBwUcLW/rNewgmXLytoLzRpxadcxSfJAQ==
+
 expo-constants@~9.3.3:
   version "9.3.5"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-9.3.5.tgz#78085763e8ed100a5f2df7c682fd99631aa03d5e"
@@ -5799,6 +5804,13 @@ react-is@^17.0.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
 
+react-native-animatable@1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.3.3.tgz#a13a4af8258e3bb14d0a9d839917e9bb9274ec8a"
+  integrity sha512-2ckIxZQAsvWn25Ho+DK3d1mXIgj7tITkrS4pYDvx96WyOttSvzzFeQnM2od0+FUMzILbdHDsDEqZvnz1DYNQ1w==
+  dependencies:
+    prop-types "^15.7.2"
+
 react-native-chart-kit@^6.9.0:
   version "6.9.0"
   resolved "https://registry.yarnpkg.com/react-native-chart-kit/-/react-native-chart-kit-6.9.0.tgz#dca879f311c96a4d05f2298d09ca7930a5f7bd83"
@@ -5838,6 +5850,14 @@ react-native-iphone-x-helper@^1.3.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
+
+react-native-modal@^11.6.1:
+  version "11.6.1"
+  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-11.6.1.tgz#6162a39731860fb3b6e8304059f72dc0a961f9fd"
+  integrity sha512-Xsd79nuBvbLOYwpRuur4btwJFQ3WkV9zp5LbAREidUtjl/Ajlp4QbNBx888FOPjo+EpOO3+U0riCRqs1dkdIzQ==
+  dependencies:
+    prop-types "^15.6.2"
+    react-native-animatable "1.3.3"
 
 react-native-ratings@^7.3.0:
   version "7.3.0"
