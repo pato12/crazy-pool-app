@@ -2,7 +2,6 @@ import React, { useEffect, useLayoutEffect } from 'react';
 import { ThemeProvider } from 'react-native-elements';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from 'expo-status-bar';
-import { AppearanceProvider, useColorScheme } from 'react-native-appearance';
 
 import useTheme from './hooks/useTheme';
 
@@ -14,13 +13,11 @@ import { lightTheme, darkTheme, DarkModeProvider, useDarkMode } from './themeMan
 
 function App() {
   return (
-    <AppearanceProvider>
-      <ThemeProvider theme={lightTheme}>
-        <DarkModeProvider>
-          <AppStack />
-        </DarkModeProvider>
-      </ThemeProvider>
-    </AppearanceProvider>
+    <ThemeProvider theme={lightTheme}>
+      <DarkModeProvider>
+        <AppStack />
+      </DarkModeProvider>
+    </ThemeProvider>
   );
 }
 
