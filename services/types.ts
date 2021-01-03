@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 interface Exchangedata {
   btc: string;
   color_change_percentage: string;

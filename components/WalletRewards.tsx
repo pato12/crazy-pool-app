@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import { Text, Card, ListItem } from 'react-native-elements';
 import { View, StyleSheet } from 'react-native';

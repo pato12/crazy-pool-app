@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React, { useCallback, useLayoutEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { ButtonGroup, Button, Text } from 'react-native-elements';
