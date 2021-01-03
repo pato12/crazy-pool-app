@@ -8,6 +8,7 @@ import useTheme from './hooks/useTheme';
 import SplashScreenView from './views/splashscreen';
 import MainView from './views/main';
 import WalletStatsView from './views/walletStats';
+import SettingsView from './views/settings';
 
 import { Stack } from './navigation';
 import { lightTheme, darkTheme, DarkModeProvider, useDarkMode } from './themeManager';
@@ -54,6 +55,7 @@ function AppStack() {
       >
         <Stack.Screen name="Main" component={MainView} />
         <Stack.Screen name="WalletStats" component={WalletStatsView} />
+        <Stack.Screen name="Settings" component={SettingsView} />
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -5,19 +5,17 @@ import useToggle from 'react-use/lib/useToggle';
 
 import useWalletHistory from '../hooks/useWalletHistory';
 
-import { Container, Layout, Title } from '../components/ui';
+import { Layout } from '../components/ui';
 import WalletHistory from '../components/WalletHistory';
 import WalletSelector from '../components/WalletSelector';
 
 import { MainProps } from '../navigation';
-import { useDarkMode } from '../themeManager';
 
 interface IMainViewProps extends MainProps {}
 
 function MainView(props: IMainViewProps) {
   const { history, saveWalletAddress, clearHistory } = useWalletHistory();
 
-  const { isDarkMode, setIsDarkMode } = useDarkMode();
   const [walletSelectorVisible, toggleWalleSelectorVisible] = useToggle(false);
 
   const onNavigateToWallet = useCallback((wallet: string) => {
@@ -28,6 +26,9 @@ function MainView(props: IMainViewProps) {
   useLayoutEffect(() => {
     props.navigation.setOptions({
       title: `Crazy Pool Home`,
+      headerRight: () => (
+        <Button type="clear" onPress={() => props.navigation.push('Settings')} title={'Settings'} />
+      ),
     });
   }, [props.navigation]);
 
@@ -39,16 +40,6 @@ function MainView(props: IMainViewProps) {
           onNavigateToWallet={onNavigateToWallet}
           onClearHistory={clearHistory}
           onAddWallet={toggleWalleSelectorVisible}
-        />
-
-        <Container>
-          <Title>Settings</Title>
-        </Container>
-
-        <Button
-          type="clear"
-          title={`Change to ${isDarkMode ? 'light mode' : 'dark mode'}`}
-          onPress={() => setIsDarkMode((v: boolean) => !v)}
         />
       </ScrollView>
 
