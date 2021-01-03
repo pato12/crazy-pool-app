@@ -58,6 +58,7 @@ function parseData(walletStats: WalletAccountData, poolStats: PoolStatsData) {
     workers,
     sumrewards: walletStats.sumrewards,
     exchangedata: walletStats.exchangedata,
+    minerCharts: walletStats.minerCharts,
     rewards: walletStats.rewards.slice(0, 10),
   };
 }

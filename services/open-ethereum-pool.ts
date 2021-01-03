@@ -4,7 +4,7 @@ import axios from 'axios';
 const API_URL = 'https://eth.crazypool.org/api/';
 
 export async function getAccount(walletAddress: string): Promise<WalletAccountData> {
-  const data = await axios.get<WalletAccountData>(`${API_URL}/accounts/${walletAddress}`);
+  const data = await axios.get<WalletAccountData>(`${API_URL}/accounts/${walletAddress}/chart`);
 
   return data.data;
 }

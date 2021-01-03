@@ -78,7 +78,9 @@ function WalletStats(props: IWalletStatsProps) {
 
       <ScrollView>
         {selectedMenu === 0 && <WalletOverview rate={currentRate} data={data} />}
-        {selectedMenu === 1 && <WalletWorkers workers={data.workers} />}
+        {selectedMenu === 1 && (
+          <WalletWorkers workers={data.workers} minerCharts={data.minerCharts} />
+        )}
         {selectedMenu === 2 && <WalletRewards rate={currentRate} data={data} />}
 
         <View style={styles.footer}>

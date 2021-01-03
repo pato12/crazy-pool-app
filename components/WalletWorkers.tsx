@@ -5,17 +5,21 @@ import { formatDistanceToNow } from 'date-fns';
 
 import type { IWalletStatsData } from '../hooks/useWalletStats';
 
-import { formatHashrate } from '../helpers';
 import { Container, Title } from './ui';
 import RealTimeDate from './RealTimeDate';
+import MinersChart from './MinersChart';
+
+import { formatHashrate } from '../helpers';
 
 interface IWalletWorkersProps {
   workers: IWalletStatsData['workers'];
+  minerCharts: IWalletStatsData['minerCharts'];
 }
 
 function WalletWorkers(props: IWalletWorkersProps) {
   return (
     <View>
+      <MinersChart minerCharts={props.minerCharts} />
       {props.workers.map(worker => (
         <WorkerItem
           key={worker.name}
