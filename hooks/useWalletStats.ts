@@ -1,27 +1,38 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useAsync from 'react-use/lib/useAsync';
 import useUpdateEffect from 'react-use/lib/useUpdateEffect';
 
 import { getAccount, getPoolStats } from '../services/open-ethereum-pool';
 import type { PoolStatsData, WalletAccountData } from '../services/types';
 
+import useUpdate from './useUpdate';
+
 export type IWalletStatsData = ReturnType<typeof parseData>;
 
 function useWalletStats(walletAddress: string) {
+  const { dep, forceUpdate } = useUpdate();
   const [lastUpdate, setLastUpdate] = useState(-1);
 
-  const account = useAsync(() => getAccount(walletAddress), [walletAddress]);
-  const pool = useAsync(() => getPoolStats(), []);
+  const account = useAsync(() => getAccount(walletAddress), [walletAddress, dep]);
+  const pool = useAsync(() => getPoolStats(), [dep]);
 
   const data: IWalletStatsData | undefined =
     account.value && pool.value ? parseData(account.value, pool.value) : undefined;
 
+  const isLoading = !data && (account.loading || pool.loading);
+  const isError = !data && (!!account.error || !!pool.error);
+
   useUpdateEffect(() => setLastUpdate(Date.now()), [account.value, pool.value]);
+
+  useEffect(() => {
+    const interval = setInterval(() => forceUpdate(), 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   return {
     data,
-    isLoading: account.loading || pool.loading,
-    isError: !!account.error || !!pool.error,
+    isLoading,
+    isError,
     lastUpdate,
   };
 }
