@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React, { useCallback, useState } from 'react';
 import { TouchableWithoutFeedback, View, StyleSheet } from 'react-native';
 import { Text, Card, Input, Button } from 'react-native-elements';
@@ -17,10 +18,10 @@ function WalletSelector(props: React.PropsWithChildren<IWalletSelectorProps>) {
   const [wallet, setWallet] = useState<string>('');
 
   const onSubmit = useCallback(async () => {
-    let currentWallet = wallet;
+    let currentWallet = _.trim(wallet);
 
     if (!currentWallet) {
-      currentWallet = await Clipboard.getStringAsync();
+      currentWallet = _.trim(await Clipboard.getStringAsync());
       setWallet(currentWallet);
     }
 
