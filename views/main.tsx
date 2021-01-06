@@ -8,6 +8,7 @@ import useWalletHistory from '../hooks/useWalletHistory';
 import { Layout } from '../components/ui';
 import WalletHistory from '../components/WalletHistory';
 import WalletSelector from '../components/WalletSelector';
+import SupportUs from '../components/SupportUs';
 
 import { MainProps } from '../navigation';
 
@@ -41,6 +42,8 @@ function MainView(props: IMainViewProps) {
           onClearHistory={clearHistory}
           onAddWallet={toggleWalleSelectorVisible}
         />
+
+        {history.length > 0 && <SupportUs />}
       </ScrollView>
 
       <WalletSelector

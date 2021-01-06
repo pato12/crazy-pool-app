@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements';
 
-function Title(props: React.PropsWithChildren<{}>) {
-  return <Text style={styles.title}>{props.children}</Text>;
+function Title(props: React.PropsWithChildren<React.ComponentProps<typeof Text>>) {
+  return <Text style={StyleSheet.flatten([styles.title, props.style])}>{props.children}</Text>;
 }
 
 export default Title;
