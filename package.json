@@ -70,7 +70,8 @@
   },
   "np": {
     "yarn": true,
-    "publish": false
+    "publish": false,
+    "branch": "main"
   },
   "private": true,
   "license": "MIT"
