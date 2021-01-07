@@ -8,7 +8,9 @@ import type { IRate } from '../hooks/useCurrencyRate';
 import useTheme from '../hooks/useTheme';
 
 import { formatBalance, formatBlockHeight, formatPercent, formatWalletAddress } from '../helpers';
+
 import { Title, Container } from './ui';
+import TodayRewards from './TodayRewards';
 
 interface IWalletRewardsProps {
   data: IWalletStatsData;
@@ -23,6 +25,8 @@ function WalletRewards({ data, rate }: IWalletRewardsProps) {
       <Container>
         <Title>Your Latest Rewards</Title>
       </Container>
+
+      <TodayRewards data={data} rate={rate} />
 
       <Card containerStyle={{ padding: 0 }}>
         {sumrewards.map(reward => (

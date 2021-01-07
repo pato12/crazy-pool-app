@@ -112,5 +112,6 @@ const styles = StyleSheet.create({
   },
   hint: {
     opacity: 0.5,
+    lineHeight: 25,
   },
 });
